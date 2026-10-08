@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Run · OpenSplits Live</title>
+  <meta name="theme-color" content="#ff5a1f">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="/"><img src="/icons/icon.svg" alt=""><span>Open<em>Splits</em> Live</span></a>
+    <div class="spacer"></div>
+    <span id="badge" class="badge ready" hidden>Not started</span>
+  </header>
+
+  <main class="wrap">
+    <!-- 1. Set up -->
+    <section id="setup" hidden>
+      <h1>New live run</h1>
+      <p class="lead">Create a link, share it with friends, then hit start.</p>
+      <form id="setupForm" class="card">
+        <label for="name">Run name</label>
+        <input id="name" maxlength="60" placeholder="e.g. Sam's Sunday long run">
+        <div class="row">
+          <div>
+            <label for="unit">Units</label>
+            <select id="unit">
+              <option value="km">Kilometers</option>
+              <option value="mi">Miles</option>
+            </select>
+          </div>
+          <div>
+            <label for="goal">Goal distance</label>
+            <select id="goal">
+              <option value="">None</option>
+              <option value="5k">5K</option>
+              <option value="10k">10K</option>
+              <option value="half">Half marathon</option>
+              <option value="marathon">Marathon</option>
+              <option value="custom">Custom…</option>
+            </select>
+          </div>
+        </div>
+        <div id="customGoalRow" hidden>
+          <label for="customGoal">Custom goal (<span id="customUnit">km</span>)</label>
+          <input id="customGoal" type="number" min="0.1" step="0.1" inputmode="decimal">
+        </div>
+        <p id="setupError" class="notice err" hidden></p>
+        <button class="btn primary big block" type="submit" style="margin-top:16px">Create share link</button>
+      </form>
+    </section>
+
+    <!-- 2. Live -->
+    <section id="live" hidden>
+      <div class="card">
+        <h2 id="runName">Your run</h2>
+        <p class="small muted" style="margin-top:-6px">Friends can follow at this link:</p>
+        <div class="share">
+          <input id="link" readonly>
+          <button class="btn primary" id="shareBtn" type="button">Share</button>
+        </div>
+      </div>
+
+      <div id="bgWarning" class="notice warn" hidden>
+        Keep this screen open while you run — your phone pauses GPS for web apps when the screen is off or another app is in front.
+      </div>
+      <div id="gpsError" class="notice err" hidden></div>
+
+      <div class="statusline">
+        <span><i id="gpsDot" class="dot"></i>GPS <b id="gpsText">waiting…</b></span>
+        <span><i id="syncDot" class="dot"></i>Sync <b id="syncText">idle</b></span>
+        <span id="viewersWrap" hidden>👀 <b id="viewers">0</b> watching</span>
+      </div>
+
+      <div class="stats" id="stats">
+        <div class="stat wide"><div class="k">Time</div><div class="v" data-stat="time">0:00</div></div>
+        <div class="stat"><div class="k">Distance</div><div class="v"><span data-stat="distance">0.00</span><span class="u" data-unit="dist">km</span></div></div>
+        <div class="stat"><div class="k">Pace</div><div class="v"><span data-stat="pace">--:--</span><span class="u" data-unit="pace">/km</span></div></div>
+        <div class="stat"><div class="k">Avg pace</div><div class="v"><span data-stat="avg">--:--</span><span class="u" data-unit="pace">/km</span></div></div>
+        <div class="stat" id="projectedStat" hidden><div class="k">Projected finish</div><div class="v" data-stat="projected">--</div></div>
+      </div>
+
+      <div class="map short" id="map"><button class="btn sm map-btn" id="followBtn" hidden>Re-center</button></div>
+
+      <div class="card" data-splits hidden>
+        <h2>Splits</h2>
+        <table class="splits" id="splits">
+          <thead><tr><th>Split</th><th>Pace</th><th>Total</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="controls">
+        <button class="btn go big" id="startBtn">Start</button>
+        <button class="btn warn big" id="pauseBtn" hidden>Pause</button>
+        <button class="btn go big" id="resumeBtn" hidden>Resume</button>
+        <button class="btn danger big" id="finishBtn" hidden>Finish</button>
+      </div>
+    </section>
+
+    <!-- 3. Done -->
+    <section id="done" hidden>
+      <h1>Nice run! 🎉</h1>
+      <div class="stats" id="summary">
+        <div class="stat wide"><div class="k">Time</div><div class="v" data-stat="time">0:00</div></div>
+        <div class="stat"><div class="k">Distance</div><div class="v"><span data-stat="distance">0.00</span><span class="u" data-unit="dist">km</span></div></div>
+        <div class="stat"><div class="k">Avg pace</div><div class="v"><span data-stat="avg">--:--</span><span class="u" data-unit="pace">/km</span></div></div>
+      </div>
+      <p id="doneSync" class="notice warn" hidden>Uploading the last few points… keep this page open.</p>
+      <div class="row">
+        <a class="btn block" id="doneLink" href="/">View run page</a>
+        <button class="btn primary block" id="newRunBtn">New run</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/vendor/leaflet/leaflet.js"></script>
+  <script type="module" src="/js/runner.js"></script>
+</body>
+</html>

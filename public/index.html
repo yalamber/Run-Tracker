@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>OpenSplits Live</title>
+  <meta name="description" content="Share your run live with friends: real-time location, pace and splits.">
+  <meta name="theme-color" content="#ff5a1f">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="/"><img src="/icons/icon.svg" alt=""><span>Open<em>Splits</em> Live</span></a>
+    <div class="spacer"></div>
+    <button class="btn sm" id="install" hidden>Install app</button>
+  </header>
+
+  <main class="wrap">
+    <h1>Run live. Friends follow along.</h1>
+    <p class="lead">Start tracking, send one link, and anyone can watch your position, pace and splits update in real time — no account needed.</p>
+
+    <div id="resume" class="notice warn" hidden>
+      You have a run in progress. <a href="/run">Go back to it →</a>
+    </div>
+
+    <a class="btn primary big block" href="/run">Start a run</a>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Watch a friend</h2>
+      <form id="watch" class="share">
+        <input id="code" placeholder="Paste a link or run code" autocomplete="off" autocapitalize="off" required>
+        <button class="btn primary" type="submit">Watch</button>
+      </form>
+    </div>
+
+    <div class="card" id="recent" hidden>
+      <h2>Your recent runs</h2>
+      <ul class="list" id="recentList"></ul>
+    </div>
+
+    <p class="small muted">Tip: add OpenSplits Live to your home screen for a full-screen app. Keep the screen on while you run — phones pause GPS for web apps when the screen locks.</p>
+  </main>
+
+  <script type="module" src="/js/home.js"></script>
+</body>
+</html>

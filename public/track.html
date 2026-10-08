@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Live run · OpenSplits Live</title>
+  <meta name="theme-color" content="#ff5a1f">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="/"><img src="/icons/icon.svg" alt=""><span>Open<em>Splits</em> Live</span></a>
+    <div class="spacer"></div>
+    <button class="btn sm" id="unitBtn" type="button">km</button>
+    <button class="btn sm primary" id="shareBtn" type="button">Share</button>
+  </header>
+
+  <main class="wrap">
+    <div id="error" class="notice err" hidden></div>
+
+    <div class="title-row">
+      <h1 id="name">Loading…</h1>
+      <span id="badge" class="badge ready">Not started</span>
+    </div>
+
+    <div class="statusline">
+      <span><i id="connDot" class="dot"></i><b id="connText">connecting…</b></span>
+      <span>Updated <b id="updated">--</b></span>
+      <span id="viewersWrap" hidden>👀 <b id="viewers">1</b> watching</span>
+      <span id="goalWrap" hidden>Goal <b id="goal"></b></span>
+    </div>
+
+    <div id="waiting" class="notice" hidden>Waiting for the runner to start. This page updates automatically.</div>
+
+    <div class="map" id="map"><button class="btn sm map-btn" id="followBtn" hidden>Follow runner</button></div>
+
+    <div class="stats" id="stats">
+      <div class="stat wide"><div class="k">Time</div><div class="v" data-stat="time">0:00</div></div>
+      <div class="stat"><div class="k">Distance</div><div class="v"><span data-stat="distance">0.00</span><span class="u" data-unit="dist">km</span></div></div>
+      <div class="stat"><div class="k">Pace</div><div class="v"><span data-stat="pace">--:--</span><span class="u" data-unit="pace">/km</span></div></div>
+      <div class="stat"><div class="k">Avg pace</div><div class="v"><span data-stat="avg">--:--</span><span class="u" data-unit="pace">/km</span></div></div>
+      <div class="stat" id="projectedStat" hidden><div class="k">Projected finish</div><div class="v" data-stat="projected">--</div></div>
+    </div>
+
+    <div class="card" data-splits hidden>
+      <h2>Splits</h2>
+      <table class="splits" id="splits">
+        <thead><tr><th>Split</th><th>Pace</th><th>Total</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <p class="small muted">Want to share your own run? <a href="/run">Start one on OpenSplits Live</a>.</p>
+  </main>
+
+  <script src="/vendor/leaflet/leaflet.js"></script>
+  <script type="module" src="/js/viewer.js"></script>
+</body>
+</html>
